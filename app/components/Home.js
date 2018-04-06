@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import  { Dimensions } from 'react-native';
 
 import {
     Platform,
@@ -6,28 +7,40 @@ import {
     Text,
     View,
     ScrollView,
-    Button
+    Button,
+    Image
 } from 'react-native';
 
 export default class Home extends Component {
 
     componentDidMount(){
-        this.props.getCharacters();
+        console.log(this.props.searchText)
+        this.props.getCharacters(this.props.searchText);
     }
 
     render() {
         let characters = ""
         if(this.props.characters){
+            var {height, width} = Dimensions.get('window');
+            console.log(this.props.characters);
             characters = this.props.characters.map((item, index)=>{
-                return <View><Text key={index}>{item.name}</Text></View>
+                
+                return <View >
+                    <Text style={styles.header} key={index}>{item.name}</Text>
+                    <Image style={{ height:width, width:width}} source={{uri:item.thumbnail.path + "." + item.thumbnail.extension}}/>
+                </View>
             });
         }
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>Marvel Characters</Text>
-                {characters}
+
+                <ScrollView>
+                    {characters}
+                </ScrollView>
             </View>
         );
+    
     }
 
 }

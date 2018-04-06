@@ -9,6 +9,12 @@ const marvel = (state = {}, action) => {
       nextState.characters = action.characters;
       return nextState;
     }
+    case 'UPDATE_SEARCH': {
+      console.log(action.name);
+      nextState.searchText = action.name;
+      return nextState;
+    }
+    
     default:
       return nextState;
   }
